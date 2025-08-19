@@ -1,94 +1,92 @@
-group 'fr.minuskube.inv'
-version '1.2.7'
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'signing'
+}
 
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'signing'
+group = 'fr.minuskube.inv'
+version = '1.2.7'
 
-sourceCompatibility = 1.8
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+    withJavadocJar()
+    withSourcesJar()
+}
 
 javadoc {
     options.links(
             'https://hub.spigotmc.org/javadocs/spigot/',
             'https://docs.oracle.com/javase/8/docs/api/'
     )
-
     options.addStringOption('Xdoclint:none', '-quiet')
 }
 
-task javadocJar(type: Jar) {
-    archiveClassifier = 'javadoc'
-    from javadoc
-}
-
-task sourcesJar(type: Jar) {
-    archiveClassifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-artifacts { archives javadocJar, sourcesJar }
-
 repositories {
     mavenCentral()
-
     maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 }
 
 dependencies {
-    compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
+    compileOnly 'org.spigotmc:spigot-api:1.21.8-R0.1-SNAPSHOT'
 }
 
 jar {
-    archiveFileName = 'SmartInvs-' + project.version + '.jar'
+    archiveFileName = "SmartInvs-${project.version}.jar"
 }
 
-signing {
-    sign configurations.archives
-}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-            if(project.hasProperty("ossrhUsername") && project.hasProperty("ossrhPassword")) {
-                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                    authentication(userName: ossrhUsername, password: ossrhPassword)
-                }
-
-                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                    authentication(userName: ossrhUsername, password: ossrhPassword)
-                }
-            }
-
-            pom.project {
-                name 'SmartInvs'
-                packaging 'jar'
-                description 'Advanced Inventory API for your Minecraft Bukkit plugins.'
-                url 'https://github.com/MinusKube/SmartInvs'
+            pom {
+                name.set("SmartInvs")
+                packaging = "jar"
+                description.set("Advanced Inventory API for your Minecraft Bukkit plugins.")
+                url.set("https://github.com/MinusKube/SmartInvs")
 
                 scm {
-                    connection 'scm:git:git://github.com/MinusKube/SmartInvs.git'
-                    developerConnection 'scm:git:ssh://github.com:MinusKube/SmartInvs.git'
-                    url 'http://github.com/MinusKube/SmartInvs/tree/master'
+                    connection.set("scm:git:git://github.com/MinusKube/SmartInvs.git")
+                    developerConnection.set("scm:git:ssh://github.com:MinusKube/SmartInvs.git")
+                    url.set("http://github.com/MinusKube/SmartInvs/tree/master")
                 }
 
                 licenses {
                     license {
-                        name 'GNU General Public License v3.0'
-                        url 'https://www.gnu.org/licenses/gpl-3.0.en.html'
+                        name.set("GNU General Public License v3.0")
+                        url.set("https://www.gnu.org/licenses/gpl-3.0.en.html")
                     }
                 }
 
                 developers {
                     developer {
-                        id 'minuskube'
-                        name 'MinusKube'
-                        email 'minuskube@gmail.com'
+                        id.set("minuskube")
+                        name.set("MinusKube")
+                        email.set("minuskube@gmail.com")
                     }
                 }
             }
         }
     }
+
+    repositories {
+        maven {
+            if (project.hasProperty("ossrhUsername") && project.hasProperty("ossrhPassword")) {
+                url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+                credentials {
+                    username = project.ossrhUsername
+                    password = project.ossrhPassword
+                }
+            } else {
+                url = uri("$buildDir/repo") // local repo fallback
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
 }
