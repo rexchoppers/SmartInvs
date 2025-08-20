@@ -6,8 +6,10 @@
 # SmartInvs
 Advanced Inventory API for your Minecraft Bukkit plugins.
 
-*Tested Minecraft versions: 1.7, 1.8, 1.9, 1.10, 1.11, 1.12, 1.13, 1.14*  
-**You can use this as a Plugin, or use it as a library** (see [the docs](https://minuskube.gitbook.io/smartinvs/))
+**Note** This is a fork of the original [SmartInvs](https://github.com/MinusKube/SmartInvs) project, which appears to be 
+abandoned. 
+
+**Tested Minecraft versions**: 1.21  
 
 ## Features
 * Inventories of any type (workbench, chest, furnace, ...)
@@ -20,9 +22,6 @@ Advanced Inventory API for your Minecraft Bukkit plugins.
 * Util methods to fill an inventory's row/column/borders/...
 * Actions when player clicks on an item
 * Update methods to edit the content of the inventory every tick
-
-## Docs
-[Click here to read the docs on Gitbook](https://minuskube.gitbook.io/smartinvs/)
 
 ## Usage
 To use the SmartInvs API, either:
@@ -43,17 +42,9 @@ dependencies {
 }
 ```
 
-### Maven
-```xml
-<dependency>
-  <groupId>fr.minuskube.inv</groupId>
-  <artifactId>smart-invs</artifactId>
-  <version>1.2.7</version>
-</dependency>
-```
-
 ## TODO
-* Add some Javadocs
+* JavaDoc
+* Maven Central release
 
 ## Issues
 If you have a problem with the API, or you want to request a feature, make an issue [here](https://github.com/MinusKube/SmartInvs/issues).
