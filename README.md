@@ -33,11 +33,11 @@ You can also use a build system:
 ### Gradle
 ```gradle
 repositories {
-    mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    compile 'com.github.rexchoppers:SmartInvs:2.0.0-alpha.3'
+    implementation 'com.github.rexchoppers:SmartInvs:2.0.0-alpha.3'
 }
 ```
 
