@@ -6,7 +6,7 @@
 Advanced Inventory API for your Minecraft Bukkit plugins.
 
 **Note** This is a fork of the original [SmartInvs](https://github.com/MinusKube/SmartInvs) project, which appears to be 
-abandoned. 
+abandoned (Lack of version updates, no response to issues, etc...)
 
 **Tested Minecraft versions**: 1.21  
 
@@ -37,7 +37,7 @@ repositories {
 }
 
 dependencies {
-    compile 'fr.minuskube.inv:smart-invs:1.2.7'
+    compile 'com.github.rexchoppers:SmartInvs:2.0.0-alpha.3'
 }
 ```
 
